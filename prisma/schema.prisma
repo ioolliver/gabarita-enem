@@ -12,6 +12,7 @@ model Question {
   command      String
   correct      Int
   identifier   String
+  year         Int
   abilityCode  Int
   options      String[]
   languageType Int      @default(0)
@@ -20,8 +21,8 @@ model Question {
 }
 
 model List {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   abilityFilter Int[]
   questions     String[]
-  createdAt     DateTime   @default(now())
+  createdAt     DateTime @default(now())
 }
