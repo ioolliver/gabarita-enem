@@ -29,9 +29,10 @@ export default function Page() {
     });
 
     async function createQuestion() {
-        const info = await API.post("question/create", questionInfo);
+        const info = await API.post("questions/create", questionInfo);
+        if(info.status == 400) return alert('Erro!');
         alert('Criado!');
-        setQuestionInfo(q => ({...q, abilityCode: undefined, command: "", correct: undefined, imageUrl: "", options: ["", "", "", "", ""], preCommand: ""}))
+        setQuestionInfo(q => ({...q, command: "", imageUrl: "", options: ["", "", "", "", ""], preCommand: ""}))
     }
 
     return (

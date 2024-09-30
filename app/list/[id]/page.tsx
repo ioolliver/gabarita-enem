@@ -1,3 +1,4 @@
+import { Header } from "@/components/header";
 import { QuestionCard } from "@/components/questionCard";
 import { List, Question } from "@prisma/client";
 
@@ -7,7 +8,8 @@ export default async function Page({ params: { id } } : { params: { id: string }
     const questions = list.questions as unknown as Question[];
 
     return (
-        <main className="w-full h-full bg-white">
+        <main className="w-full p-4 min-h-screen bg-white">
+            <Header />
             <h1 className="font-bold text-lg text-center mt-4">Lista {id}</h1>
             <div className="">
             {
