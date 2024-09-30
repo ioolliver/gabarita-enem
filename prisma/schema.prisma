@@ -23,6 +23,7 @@ model Question {
 model List {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   abilityFilter Int[]
+  languageFilter Int
   questions     String[]
   createdAt     DateTime @default(now())
 }

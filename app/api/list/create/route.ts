@@ -38,7 +38,8 @@ export async function POST(request: Request) {
     const list = await prisma.list.create({
         data: {
             abilityFilter: body.abilityFilter,
-            questions: questionsId
+            questions: questionsId,
+            languageFilter: languageCode
         }
     })
     return Response.json(list);

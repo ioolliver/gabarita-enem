@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import ShimmerButton from "./ui/shimmer-button";
 import NumberTicker from "./ui/number-ticker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 export function ListCreator() {
     const router = useRouter();
+    const { toast } = useToast();
     const [currentAbility, setCurrentAbility] = useState("");
     const [abilityFilter, setAbilityFilter] = useState<number[]>([]);
     const [languageFilter, setLanguageFilter] = useState("");
@@ -29,12 +31,18 @@ export function ListCreator() {
 
     async function createList() {
         if(availableCount < listSize) {
-            alert("Não temos questões suficientes para a sua lista com o filtro atual.");
+            toast({ 
+                variant: "destructive",
+                description: "Não temos questões suficientes para a sua lista com o filtro atual." 
+            });
             return;
         }
         const list = await API.post("list/create", { abilityFilter, listSize, languageFilter });
         if(!list.id) {
-            alert("Não temos questões suficientes para a sua lista com o filtro atual.");
+            toast({ 
+                variant: "destructive",
+                description: "Não temos questões suficientes para a sua lista com o filtro atual." 
+            });
             return;
         }
         router.push("/list/" + list.id)
