@@ -39,6 +39,9 @@ export function ListCreator() {
             return;
         }
         setCreateButton(true);
+        toast({
+            description: "Criando lista..." 
+        });
         const list = await API.post("list/create", { abilityFilter, listSize, languageFilter });
         if(!list.id) {
             toast({ 
