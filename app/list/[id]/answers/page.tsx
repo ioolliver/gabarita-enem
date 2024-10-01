@@ -5,6 +5,14 @@ import ShimmerButton from "@/components/ui/shimmer-button";
 import { cn } from "@/lib/utils";
 import { List, Question } from "@prisma/client";
 
+function getAbilities(questions : Question[]) {
+    let abs : number[] = [];
+    for(let i = 0; i < questions.length; i++) {
+        if(!abs.includes(questions[i].abilityCode)) abs.push(questions[i].abilityCode);
+    }
+    return abs;
+}
+
 export default async function Page({ params: { id }, searchParams: { g } } : { params: { id: string }, searchParams: { g: string } }) {
     const listReq = await fetch(process.env.API_URL+"/api/list/"+id)
     const list : List = await listReq.json();
@@ -14,6 +22,8 @@ export default async function Page({ params: { id }, searchParams: { g } } : { p
     for(let i = 0; i < questions.length; i++) {
         if(Number(g[i]) == questions[i].correct) acertos++;
     }
+
+    const abilities = list.abilityFilter.length > 0 ? list.abilityFilter : getAbilities(questions);
 
     const acertosPercentage = parseFloat(((acertos / questions.length) * 100).toFixed(1));
 
@@ -41,12 +51,12 @@ export default async function Page({ params: { id }, searchParams: { g } } : { p
                     <p className="text-2xl">Você acertou {acertos}/{questions.length} ({acertosPercentage}%) das questões!</p>
                 </div>
                 <div className={cn("w-full p-4 grid grid-cols-1 justify-items-center justify-between items-center", {
-                    "md:grid-cols-1": (list.abilityFilter.length <= 1),
-                    "md:grid-cols-2": (list.abilityFilter.length == 2),
-                    "md:grid-cols-3": (list.abilityFilter.length >= 3)
+                    "md:grid-cols-1": (abilities.length <= 1),
+                    "md:grid-cols-2": (abilities.length == 2),
+                    "md:grid-cols-3": (abilities.length >= 3)
                 })}>
                 {
-                    list.abilityFilter.map(ability => {
+                    abilities.map(ability => {
                         let acertosHab = 0;
                         let gabaritoHab = "";
                         let questionsHab = [];
