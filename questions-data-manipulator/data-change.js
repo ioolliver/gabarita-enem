@@ -1,4 +1,4 @@
-const data = [
+[
     {
         "command": "Na introdução do romance, o narrador resgata lembranças de Plácida Linero relacionadas a seu filho Santiago Nasar. Nessa introdução, o uso da expressão augurio aciago remete ao(à)",
         "correct": 1,
@@ -80,14 +80,3 @@ const data = [
         "imageUrl": "https://i.imgur.com/p07hN6l.png"
     }
 ]
-
-const axios = require('axios');
-
-async function main() {
-    for(let i = 0; i < data.length; i++) {
-        await axios.post("http://localhost:3000/api/questions/create", data[i]);
-        console.log('Questão' + (Number(i)+1) + ' enviada.');
-    }
-}
-console.log(data.length);
-main();

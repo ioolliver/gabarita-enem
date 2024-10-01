@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     const body = await request.json();
-    if(!body.password || body.password && body.password != "gbl222") return Response.json({});
+    if(process.env.NODE_ENV == "production") return Response.json({});
     try{
         const question = await prisma.question.create({
             data: body
