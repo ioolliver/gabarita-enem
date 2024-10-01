@@ -17,6 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-8127338518265866" />
+      </head>
       <body className={inter.className + " bg-white text-black"}>
         {children}
         <Toaster />
