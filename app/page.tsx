@@ -11,7 +11,7 @@ import { Header } from "@/components/header";
 // <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 
 export default async function Home() {
-  const questionsFetch = await fetch("http://localhost:3000/api/questions", { next: { revalidate: 60 } })
+  const questionsFetch = await fetch(process.env.API_URL+"/api/questions", { next: { revalidate: 60 } })
   const questions = await questionsFetch.json();
 
   return (

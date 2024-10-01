@@ -59,7 +59,7 @@ export function QuestionCard({ question, index } : iQuestionCard) {
                     </Toggle>
                 </div>
             </div>
-            <img src={question.imageUrl} className="min-w-80 w-1/4 mx-auto" />
+            <img src={question.imageUrl} className="min-w-80 w-1/4 mx-auto" alt="Questão" />
             <p className="text-lg">{question.command}</p>
             <ul>
                 {

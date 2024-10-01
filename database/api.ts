@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = process.env.NODE_ENV == "production" ? "https://gabarita-linguagens.vercel.app/api/" : "http://localhost:3000/api/";
+export const API_URL = process.env.NODE_ENV == "production" ? "https://gabarita-linguagens.vercel.app/api/" : "http://localhost:3000/api/";
 
 export class API {
     static async fetch(url : string, after?: number) {
