@@ -1,4 +1,6 @@
 import { prisma } from "@/database/prisma";
+import rateLimit from "@/lib/rate-limit";
+import { NextApiResponse } from "next";
 
 function getRandomNumberList(min : number, max : number, count : number) {
     if (max - min + 1 < count) {
@@ -15,7 +17,17 @@ function getRandomNumberList(min : number, max : number, count : number) {
     return Array.from(randomNumbers) as number[];  // Convert Set to array
 }
 
-export async function POST(request: Request) {
+const limiter = rateLimit({
+    interval: 60 * 1000, // 60 seconds
+    uniqueTokenPerInterval: 500, // Max 500 users per second
+});
+
+export async function POST(request: Request, response: NextApiResponse) {
+    try {
+        await limiter.check(response, 10, "CACHE_TOKEN"); // 10 requests per minute
+    } catch {
+        Response.json({ error: "Rate limit exceeded" });
+    }
     const body = await request.json();
     if(!body.listSize) return Response.json({error: "No sufficient questions"}); 
     if(body.listSize < 5) return Response.json({error: "No sufficient questions"}); 

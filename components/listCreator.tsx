@@ -16,6 +16,7 @@ export function ListCreator() {
     const [languageFilter, setLanguageFilter] = useState("");
     const [availableCount, setavailableCount] = useState(1);
     const [listSize, setListSize] = useState(5);
+    const [createButton, setCreateButton] = useState(false);
 
     useEffect(() => {
         updateAvailableCount();
@@ -37,12 +38,14 @@ export function ListCreator() {
             });
             return;
         }
+        setCreateButton(true);
         const list = await API.post("list/create", { abilityFilter, listSize, languageFilter });
         if(!list.id) {
             toast({ 
                 variant: "destructive",
                 description: "Não temos questões suficientes para a sua lista com o filtro atual." 
             });
+            setCreateButton(false);
             return;
         }
         router.push("/list/" + list.id)
@@ -113,7 +116,7 @@ export function ListCreator() {
             </div>
             <div className="flex flex-col my-8 gap-4">
                 <p className="text-sm">Nós temos <NumberTicker value={availableCount} className="font-bold" /> questões disponíveis com os filtros selecionados.</p>
-                <ShimmerButton onClick={createList}><span className="text-xl">Criar lista</span></ShimmerButton>
+                <ShimmerButton disabled={createButton} onClick={createList}><span className="text-xl">Criar lista</span></ShimmerButton>
             </div>
         </div>
     )
