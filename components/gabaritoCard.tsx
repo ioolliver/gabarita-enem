@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Question } from "@prisma/client";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
+import { QuestionMarkdown } from "./questionMarkdown";
 
 interface iOption { 
     content : string, 
@@ -45,13 +46,16 @@ export function GabaritoCard({ question, index, marked } : iQuestionCard) {
         <div className={cn("p-8 flex flex-col gap-4")}>
             <div className="flex gap-8 items-center">
                 { isCorrect ? <Check /> : <X /> }
-                <p><b>Questão {index+1} ({question.identifier}-{question.year})</b> {question.preCommand}</p>
+                <p><b>Questão {index+1} ({question.identifier}-{question.year})</b></p>
                 <div className="flex gap-2 items-center">
                     <span>Habilidade:</span> 
                     <span className="w-6 h-6 text-center">{question.abilityCode}</span>
                 </div>
             </div>
-            <div className="w-full flex items-center">
+            <div className="flex flex-col gap-2 text-center">
+                <QuestionMarkdown content={question.preCommand} />
+            </div>
+            <div className="w-full flex items-center justify-center">
                 {question.imageUrl ? 
                 <Image width={1100} height={1100} className="w-1/4" src={question.imageUrl} alt="Questão" /> :
                 null}
