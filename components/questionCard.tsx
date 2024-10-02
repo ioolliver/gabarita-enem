@@ -6,6 +6,9 @@ import { Toggle } from "./ui/toggle";
 import { Eye, EyeOff } from "lucide-react";
 import { useContext, useState } from "react";
 import { ListContext } from "./questionList";
+import Markdown from "react-markdown";
+import { QuestionMarkdown } from "./questionMarkdown";
+import Image from "next/image";
 
 interface iOption { 
     questionIndex : number,
@@ -50,7 +53,7 @@ export function QuestionCard({ question, index } : iQuestionCard) {
     return (
         <div className="p-8 flex flex-col gap-4">
             <div className="flex gap-8 items-center">
-                <p><b>Questão {index+1} ({question.identifier}-{question.year})</b> {question.preCommand}</p>
+                <p><b>Questão {index+1} ({question.identifier}-{question.year})</b></p>
                 <div className="flex gap-2 items-center">
                     <span>Habilidade:</span> 
                     { !questionVisible ? <Skeleton className="w-6 h-6 bg-slate-400" /> : <span className="w-6 h-6 text-center">{question.abilityCode}</span> }
@@ -59,7 +62,12 @@ export function QuestionCard({ question, index } : iQuestionCard) {
                     </Toggle>
                 </div>
             </div>
-            <img src={question.imageUrl} className="min-w-80 w-1/4 mx-auto" alt="Questão" />
+            <div className="flex flex-col gap-2 text-center">
+                <QuestionMarkdown content={question.preCommand} />
+            </div>
+            <div className="w-full flex items-center justify-center">
+                <Image width={1100} height={1100} className="w-1/3" src={question.imageUrl} alt="Questão" />
+            </div>
             <p className="text-lg">{question.command}</p>
             <ul>
                 {

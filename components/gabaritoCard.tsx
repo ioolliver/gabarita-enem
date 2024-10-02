@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Question } from "@prisma/client";
 import { Check, X } from "lucide-react";
+import Image from "next/image";
 
 interface iOption { 
     content : string, 
@@ -50,7 +51,9 @@ export function GabaritoCard({ question, index, marked } : iQuestionCard) {
                     <span className="w-6 h-6 text-center">{question.abilityCode}</span>
                 </div>
             </div>
-            <img src={question.imageUrl} className="min-w-80 w-1/4 mx-auto" />
+            <div className="w-full flex items-center">
+                <Image width={1100} height={1100} className="w-1/4" src={question.imageUrl} alt="Questão" />
+            </div>
             <p className="text-lg">{question.command}</p>
             <ul>
                 {
