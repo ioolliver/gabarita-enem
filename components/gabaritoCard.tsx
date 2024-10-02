@@ -52,7 +52,9 @@ export function GabaritoCard({ question, index, marked } : iQuestionCard) {
                 </div>
             </div>
             <div className="w-full flex items-center">
-                <Image width={1100} height={1100} className="w-1/4" src={question.imageUrl} alt="Questão" />
+                {question.imageUrl ? 
+                <Image width={1100} height={1100} className="w-1/4" src={question.imageUrl} alt="Questão" /> :
+                null}
             </div>
             <p className="text-lg">{question.command}</p>
             <ul>
