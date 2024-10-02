@@ -66,7 +66,9 @@ export function QuestionCard({ question, index } : iQuestionCard) {
                 <QuestionMarkdown content={question.preCommand} />
             </div>
             <div className="w-full flex items-center justify-center">
-                <Image width={1100} height={1100} className="w-1/3" src={question.imageUrl} alt="Questão" />
+                {question.imageUrl ? 
+                <Image width={1100} height={1100} className="w-1/4" src={question.imageUrl} alt="Questão" /> :
+                null}
             </div>
             <p className="text-lg">{question.command}</p>
             <ul>
