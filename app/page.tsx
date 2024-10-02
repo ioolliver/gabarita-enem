@@ -7,6 +7,7 @@ import { RainbowButton } from "@/components/ui/rainbow-button";
 import { HandCoins } from "lucide-react";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import { Header } from "@/components/header";
+import { DonateButton } from "@/components/donateButton";
 
 // <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 
@@ -32,14 +33,7 @@ export default async function Home() {
         <h2 className="text-xl font-medium text-justify md:px-16">O Gabarita Linguagens é um projeto muito recente. Lançado em outubro de 2024, seu objetivo é quebrar o paradigma conteúdista do ensino tradicional para a Prova de Linguagens. Neste momento, o projeto conta com a sua ajuda para se manter ativo. Siga-nos nas redes sociais para acompanhar as últimas atualizações e, se possível, faça uma doação.</h2>
         <p className="text-sm">OBS: a previsão é que todas as questões do ENEM de 2023 a 2009 sejam cadastradas até 05/10. Depois disso, as questões de provas PPL serão adicionadas até 01/11 (2 dias antes do ENEM). Siga nosso Instagram para ficar por dentro das atualizações.</p>
         <div className="">
-          <a href="https://ko-fi.com/gabaritalinguagens" target="_blank">
-            <RainbowButton>
-              <div className="flex gap-2 items-center justify-center w-56">
-                <HandCoins />
-                <span>Faça uma doação</span>
-              </div>
-            </RainbowButton>
-          </a>
+          <DonateButton />
         </div>
         <div className="">
           <a href="https://www.instagram.com/gabarita.linguagens" target="_blank">
@@ -54,7 +48,7 @@ export default async function Home() {
       </section>
       <div className="flex items-center flex-col">
         <h2 className="font-semibold text-2xl">Comece criando uma lista personalizada:</h2>
-        <ListCreator />
+        <ListCreator initialCountValue={questions.count} />
       </div>
     </main>
   );

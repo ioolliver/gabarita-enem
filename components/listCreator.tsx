@@ -8,27 +8,15 @@ import NumberTicker from "./ui/number-ticker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useToast } from "@/hooks/use-toast";
 
-export function ListCreator() {
+export function ListCreator({ initialCountValue } : { initialCountValue: number }) {
     const router = useRouter();
     const { toast } = useToast();
     const [currentAbility, setCurrentAbility] = useState("");
     const [abilityFilter, setAbilityFilter] = useState<number[]>([]);
     const [languageFilter, setLanguageFilter] = useState("");
-    const [availableCount, setavailableCount] = useState(1);
+    const [availableCount, setavailableCount] = useState(initialCountValue);
     const [listSize, setListSize] = useState(5);
     const [createButton, setCreateButton] = useState(false);
-
-    useEffect(() => {
-        updateAvailableCount();
-        
-        /*(kofiWidgetOverlay as any).draw('gabaritalinguagens', {
-            'type': 'floating-chat',
-            'floating-chat.donateButton.text': 'Doe',
-            'floating-chat.donateButton.background-color': '#00b9fe',
-            'floating-chat.donateButton.text-color': '#fff'
-        });*/
-
-    }, [abilityFilter, languageFilter]);
 
     async function createList() {
         if(availableCount < listSize) {
@@ -53,17 +41,25 @@ export function ListCreator() {
         }
         router.push("/list/" + list.id)
     }
-    async function updateAvailableCount() {
-        const result = await API.fetch("questions?filter="+abilityFilter.join(",")+"&lang="+languageFilter, 10);
+    async function updateAvailableCount(abilityFiltered : number[], languageFiltered : number | string) {
+        const result = await API.fetch("questions?filter="+abilityFiltered.join(",")+"&lang="+languageFiltered, 10);
         setavailableCount(result.count);
     }
     function addAbility() {
         let code = Number(currentAbility);
         if(!code || abilityFilter.includes(code)) return;
-        setAbilityFilter(v => ([...v, code]))
+        setAbilityFilter(v => {
+            let newFilter = [...v, code]
+            updateAvailableCount(newFilter, languageFilter);
+            return newFilter
+        });
     }
     function removeFromFilter(a : number) {
-        setAbilityFilter(v => (v.filter(h => h != a)))
+        setAbilityFilter(v => {
+            let newFilter = (v.filter(h => h != a))
+            updateAvailableCount(newFilter, languageFilter);
+            return newFilter
+        });
     }
     return (
         <div className="flex flex-col items-center p-2">
@@ -106,7 +102,10 @@ export function ListCreator() {
             </div>
             <div className="p-4 my-4 flex flex-col md:flex-row items-center gap-4">
                 <p>Lingua estrangeira:</p>
-                <Select value={languageFilter} onValueChange={(e) => { setLanguageFilter(e) }}>
+                <Select value={languageFilter} onValueChange={(e) => { 
+                    setLanguageFilter(e);
+                    updateAvailableCount(abilityFilter, e);
+                }}>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Selecione" />
                 </SelectTrigger>
