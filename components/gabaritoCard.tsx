@@ -52,7 +52,7 @@ export function GabaritoCard({ question, index, marked } : iQuestionCard) {
                     <span className="w-6 h-6 text-center">{question.abilityCode}</span>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 text-center">
+            <div className="flex flex-col gap-2 text-center justify-center items-center">
                 <QuestionMarkdown content={question.preCommand} />
             </div>
             <div className="w-full flex items-center justify-center">

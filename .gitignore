@@ -12,6 +12,7 @@
 # next.js
 /.next/
 /out/
+/questions-data-manipulator/
 
 # production
 /build

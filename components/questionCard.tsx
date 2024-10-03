@@ -62,7 +62,7 @@ export function QuestionCard({ question, index } : iQuestionCard) {
                     </Toggle>
                 </div>
             </div>
-            <div className="flex flex-col gap-2 text-center">
+            <div className="flex flex-col gap-2 text-center justify-center items-center">
                 <QuestionMarkdown content={question.preCommand} />
             </div>
             <div className="w-full flex items-center justify-center">
