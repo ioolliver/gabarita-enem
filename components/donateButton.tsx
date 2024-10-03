@@ -1,4 +1,4 @@
-import { HandCoins, Heart } from "lucide-react";
+import { Copy, HandCoins, Heart } from "lucide-react";
 import { RainbowButton } from "./ui/rainbow-button";
 import {
     AlertDialog,
@@ -14,7 +14,9 @@ import {
 import Image from "next/image";
 
 import PIX from "@/assets/pix.png";
+import { CopyCode } from "./copyCode";
 
+const PIX_CODE = "00020101021126580014br.gov.bcb.pix01366aa280b7-beed-4292-a46a-b79894e086735204000053039865802BR5922ISAQUE O DO NASCIMENTO6009SAO PAULO62070503***6304B1AC";
 export function DonateButton() {
     return (
     <AlertDialog>
@@ -40,7 +42,7 @@ export function DonateButton() {
           <AlertDialogDescription className="text-black">
             ISAQUE NASCIMENTO
           </AlertDialogDescription>
-          <a className="underline text-xs" href="https://ko-fi.com/gabaritalinguagens" target="_blank">Quer ajudar com cartão de débito/crédito? Doe pelo KoFi</a>
+          <CopyCode code={PIX_CODE} />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction>Vou ajudar!</AlertDialogAction>
