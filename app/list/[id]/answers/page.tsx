@@ -14,7 +14,7 @@ function getAbilities(questions : Question[]) {
 }
 
 export default async function Page({ params: { id }, searchParams: { g } } : { params: { id: string }, searchParams: { g: string } }) {
-    const listReq = await fetch(process.env.API_URL+"/api/list/"+id)
+    const listReq = await fetch(process.env.API_URL+"/api/list/"+id, { next: { revalidate: 0 } })
     const list : List = await listReq.json();
     const questions = list.questions as unknown as Question[];
 
