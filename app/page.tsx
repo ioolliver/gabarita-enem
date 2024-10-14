@@ -31,7 +31,6 @@ export default async function Home() {
       <section className="flex text-center flex-col gap-4 my-8">
         <h1 className="text-3xl font-black">O que é o Gabarita Linguagens?</h1>
         <h2 className="text-xl font-medium text-justify md:px-16">O Gabarita Linguagens é um projeto muito recente. Lançado em outubro de 2024, seu objetivo é quebrar o paradigma conteúdista do ensino tradicional para a Prova de Linguagens. Neste momento, o projeto conta com a sua ajuda para se manter ativo. Siga-nos nas redes sociais para acompanhar as últimas atualizações e, se possível, faça uma doação.</h2>
-        <p className="text-sm">OBS: a previsão é que todas as questões do ENEM de 2023 a 2009 sejam cadastradas até 05/10. Depois disso, as questões de provas PPL serão adicionadas até 01/11 (2 dias antes do ENEM). Siga nosso Instagram para ficar por dentro das atualizações.</p>
         <div className="">
           <DonateButton />
         </div>
