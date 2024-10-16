@@ -33,4 +33,5 @@ model Answer {
   userId     String
   questionId String
   marked     Int
+  correct    Int
 }

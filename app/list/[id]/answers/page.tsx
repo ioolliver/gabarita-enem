@@ -5,6 +5,7 @@ import ShimmerButton from "@/components/ui/shimmer-button";
 import { cn } from "@/lib/utils";
 import { List, Question } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { SendAnswers } from "./SendAnswers";
 
 function getAbilities(questions : Question[]) {
     let abs : number[] = [];
@@ -33,6 +34,7 @@ export default async function Page({ params: { id }, searchParams: { g } } : { p
     return (
         <main className="w-full px-1 md:px-4 py-4 min-h-screen bg-white">
             <Header />
+            <SendAnswers questions={questions} answers={g} />
             <div className="">
                 <h1 className="font-bold md:text-lg text-center mt-4">Gabarito &#x23;{id}</h1>
                 <p className="text-center"><span className="font-bold">Filtro:</span> {
