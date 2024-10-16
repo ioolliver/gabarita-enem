@@ -1,11 +1,14 @@
 import { Header } from "@/components/header";
 import { QuestionList } from "@/components/questionList";
 import { List, Question } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 export default async function Page({ params: { id } } : { params: { id: string } }) {
     const listReq = await fetch(process.env.API_URL+"/api/list/"+id, { next: { revalidate: 0 } })
     const list : List = await listReq.json();
     const questions = list.questions as unknown as Question[];
+
+    if(!list.id) return redirect("/");
 
     return (
         <main className="w-full px-1 md:px-4 py-4 min-h-screen bg-white">

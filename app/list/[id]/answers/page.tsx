@@ -4,6 +4,7 @@ import AnimatedCircularProgressBar from "@/components/ui/animated-circular-progr
 import ShimmerButton from "@/components/ui/shimmer-button";
 import { cn } from "@/lib/utils";
 import { List, Question } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 function getAbilities(questions : Question[]) {
     let abs : number[] = [];
@@ -17,6 +18,8 @@ export default async function Page({ params: { id }, searchParams: { g } } : { p
     const listReq = await fetch(process.env.API_URL+"/api/list/"+id, { next: { revalidate: 0 } })
     const list : List = await listReq.json();
     const questions = list.questions as unknown as Question[];
+
+    if(!list.id) return redirect("/");
 
     let acertos = 0;
     for(let i = 0; i < questions.length; i++) {

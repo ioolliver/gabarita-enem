@@ -2,11 +2,13 @@
 
 import { API } from "@/database/api";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import ShimmerButton from "./ui/shimmer-button";
 import NumberTicker from "./ui/number-ticker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { FIREBASE_AUTH } from "@/database/firebase";
 
 export function ListCreator({ initialCountValue } : { initialCountValue: number }) {
     const router = useRouter();
@@ -17,6 +19,13 @@ export function ListCreator({ initialCountValue } : { initialCountValue: number 
     const [availableCount, setavailableCount] = useState(initialCountValue);
     const [listSize, setListSize] = useState(5);
     const [createButton, setCreateButton] = useState(false);
+    const [noRepeat, setNoRepeat] = useState(false);
+
+    const [user, setUser] = useState<User | null>();
+
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+        setUser(user);
+    });
 
     async function createList() {
         if(availableCount < listSize) {
@@ -41,8 +50,10 @@ export function ListCreator({ initialCountValue } : { initialCountValue: number 
         }
         router.push("/list/" + list.id)
     }
-    async function updateAvailableCount(abilityFiltered : number[], languageFiltered : number | string) {
-        const result = await API.fetch("questions?filter="+abilityFiltered.join(",")+"&lang="+languageFiltered, 10);
+    async function updateAvailableCount(abilityFiltered : number[], languageFiltered : number | string, noRepeat? : boolean) {
+        const result = await 
+        API.fetch("questions?filter="+abilityFiltered.join(",")+"&lang="+languageFiltered+"&user="
+        +(noRepeat && user ? user.uid : ""), 10);
         setavailableCount(result.count);
     }
     function addAbility() {
@@ -62,7 +73,7 @@ export function ListCreator({ initialCountValue } : { initialCountValue: number 
         });
     }
     return (
-        <div className="flex flex-col items-center p-2">
+        <div className="flex flex-col items-center p-8">
             <div className="">
                 <p>Selecione a(s) habilidade(s) que deseja treinar (1-30):</p>
                 <a className="text-xs underline" href="https://download.inep.gov.br/download/enem/matriz_referencia.pdf" target="_blank">Não sabe o código? Veja a matriz de referência</a>
@@ -115,6 +126,18 @@ export function ListCreator({ initialCountValue } : { initialCountValue: number 
                     <SelectItem value="2">Espanhol</SelectItem>
                 </SelectContent>
                 </Select>
+            </div>
+            <div className="p-4 my-4 flex flex-col items-center gap-4">
+                <div className="flex gap-4 items-center">
+                    <p>Excluir questões já respondidas:</p>
+                    <input className="border-2 w-4 h-4" type="checkbox" onChange={(e) => {
+                        updateAvailableCount(abilityFilter, languageFilter, e.target.checked);
+                        setNoRepeat(e.target.checked)
+                    }} checked={noRepeat} disabled={!user} />
+                </div>
+                <div className="">
+                    {!user ? <p className="text-xs">(Faça login para usar essa opção.)</p> : null}
+                </div>
             </div>
             <div className="flex flex-col my-8 gap-4">
                 <p className="text-sm">Nós temos <NumberTicker value={availableCount} className="font-bold" /> questões disponíveis com os filtros selecionados.</p>

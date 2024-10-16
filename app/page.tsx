@@ -8,6 +8,7 @@ import { HandCoins } from "lucide-react";
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import { Header } from "@/components/header";
 import { DonateButton } from "@/components/donateButton";
+import ShimmerButton from "@/components/ui/shimmer-button";
 
 // <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 
@@ -45,9 +46,9 @@ export default async function Home() {
           </a>
         </div>
       </section>
-      <div className="flex items-center flex-col">
+      <div className="flex items-center flex-col gap-8 py-8">
         <h2 className="font-semibold text-2xl">Comece criando uma lista personalizada:</h2>
-        <ListCreator initialCountValue={questions.count} />
+        <a href="/list/create"><ShimmerButton><span className="text-xl">Criar uma lista</span></ShimmerButton></a>      
       </div>
     </main>
   );
