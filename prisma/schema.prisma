@@ -24,6 +24,7 @@ model List {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   abilityFilter  Int[]
   languageFilter Int
+  ownerId String?
   questions      String[]
   createdAt      DateTime @default(now())
 }

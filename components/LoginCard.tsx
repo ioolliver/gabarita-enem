@@ -43,7 +43,7 @@ export function LoginCard() {
                     <DropdownMenuLabel>{user.displayName}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                    <DropdownMenuItem>Minhas listas</DropdownMenuItem>
+                    <DropdownMenuItem><a href="/lists">Minhas listas</a></DropdownMenuItem>
                     <DropdownMenuItem onClick={logOut}>Sair</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu> : 

@@ -63,7 +63,8 @@ export async function POST(request: Request, response: NextApiResponse) {
         data: {
             abilityFilter: body.abilityFilter,
             questions: questionsId,
-            languageFilter: languageCode
+            languageFilter: languageCode,
+            ownerId: userId || null
         }
     })
     return Response.json(list);

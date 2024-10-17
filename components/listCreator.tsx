@@ -74,8 +74,9 @@ export function ListCreator({ initialCountValue } : { initialCountValue: number 
     }
     return (
         <div className="flex flex-col items-center p-8">
-            <div className="">
+            <div className="flex flex-col gap-2">
                 <p>Selecione a(s) habilidade(s) que deseja treinar (1-30):</p>
+                {user ? <a className="text-xs underline" href="/lists">Veja suas listas aqui</a> : null}
                 <a className="text-xs underline" href="https://download.inep.gov.br/download/enem/matriz_referencia.pdf" target="_blank">Não sabe o código? Veja a matriz de referência</a>
                 <ul className="grid grid-cols-4 p-4 gap-4">
                     {
