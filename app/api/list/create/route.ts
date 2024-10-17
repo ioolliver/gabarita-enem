@@ -36,8 +36,20 @@ export async function POST(request: Request, response: NextApiResponse) {
     const abilityFilter = body.abilityFilter && body.abilityFilter.length > 0 ? {in: body.abilityFilter} : {gt: 0};
     const languageCode = Number(body.languageFilter); 
     const languageFilter = languageCode > 0 ? { in: [0, languageCode] } : {in: [0, 1, 2]};
+    const userId = body.userId;
+    let idFilter = {};
+    if(userId) {
+        const answers = await prisma.answer.findMany({ where: { userId } });
+        let idFilterArray : string[] = [];
+        for(let i = 0; i < answers.length; i++) {
+            let a = answers[i];
+            if(!idFilterArray.includes(a.questionId)) idFilterArray.push(a.questionId);
+        }
+        idFilter = { notIn: idFilterArray }
+    }
     const questions = await prisma.question.findMany({ 
         where: { 
+            id: idFilter,
             abilityCode: abilityFilter,
             languageType: languageFilter
         } 

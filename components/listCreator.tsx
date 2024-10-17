@@ -39,7 +39,7 @@ export function ListCreator({ initialCountValue } : { initialCountValue: number 
         toast({
             description: "Criando lista..." 
         });
-        const list = await API.post("list/create", { abilityFilter, listSize, languageFilter });
+        const list = await API.post("list/create", { abilityFilter, listSize, languageFilter, userId: user?.uid || null });
         if(!list.id) {
             toast({ 
                 variant: "destructive",
