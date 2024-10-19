@@ -24,15 +24,16 @@ model List {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   abilityFilter  Int[]
   languageFilter Int
-  ownerId String?
+  ownerId        String?
   questions      String[]
   createdAt      DateTime @default(now())
 }
 
 model Answer {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   userId     String
   questionId String
   marked     Int
   correct    Int
+  createdAt  DateTime? @default(now())
 }

@@ -29,7 +29,7 @@ export default async function Page({ params: { id }, searchParams: { g } } : { p
 
     const abilities = list.abilityFilter.length > 0 ? list.abilityFilter : getAbilities(questions);
 
-    const acertosPercentage = parseFloat(((acertos / questions.length) * 100).toFixed(1));
+    const acertosPercentage = Math.trunc(((acertos / questions.length) * 100));
 
     return (
         <main className="w-full px-1 md:px-4 py-4 min-h-screen bg-white">
@@ -75,7 +75,7 @@ export default async function Page({ params: { id }, searchParams: { g } } : { p
                         for(let i = 0; i < questionsHab.length; i++) {
                             if(questionsHab[i].correct == Number(gabaritoHab[i])) acertosHab++;
                         }
-                        let acertosHabPercentage = parseFloat(((acertosHab / questionsHab.length) * 100).toFixed(1));
+                        let acertosHabPercentage = Math.trunc(((acertosHab / questionsHab.length) * 100));
                         return (
                             <div key={ability} className="flex items-center my-2 px-4 gap-4 justify-center">
                                 <AnimatedCircularProgressBar min={0} max={100} value={acertosHabPercentage} gaugePrimaryColor="#22c55e" gaugeSecondaryColor="#ef4444" />

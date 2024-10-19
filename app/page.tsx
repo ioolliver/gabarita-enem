@@ -9,6 +9,7 @@ import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import { Header } from "@/components/header";
 import { DonateButton } from "@/components/donateButton";
 import ShimmerButton from "@/components/ui/shimmer-button";
+import { DashboardRedirector } from "./dashboardRedirector";
 
 // <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 
@@ -18,6 +19,7 @@ export default async function Home() {
 
   return (
     <main className="bg-white w-full min-h-screen p-4">
+      <DashboardRedirector />
       <Header />
       <section className="flex text-center flex-col gap-2 my-4">
         <Image className="m-auto w-3/4 md:h-64 md:w-64" src={Logo} alt="Logo oficial do Gabarita Linguagens: Machado de Assis" />

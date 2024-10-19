@@ -1,4 +1,5 @@
 import { prisma } from "@/database/prisma";
+import { getQuestionsIDList } from "@/database/utils";
 
 export async function GET(request : Request) {
     const { searchParams } = new URL(request.url);
@@ -14,11 +15,7 @@ export async function GET(request : Request) {
     let idFilter = {};
     if(userId) {
         const answers = await prisma.answer.findMany({ where: { userId } });
-        let idFilterArray : string[] = [];
-        for(let i = 0; i < answers.length; i++) {
-            let a = answers[i];
-            if(!idFilterArray.includes(a.questionId)) idFilterArray.push(a.questionId);
-        }
+        let idFilterArray = getQuestionsIDList(answers);
         idFilter = { notIn: idFilterArray }
     }
     const questions = await prisma.question.findMany({ where: { 
