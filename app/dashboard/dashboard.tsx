@@ -46,7 +46,7 @@ export function Dashboard() {
     return (
         <div>
             <div className="text-center mt-8">
-                <h1 className="text-3xl font-semibold">Bem-vindo novamente, {user.displayName}!</h1>
+                <h1 className="text-3xl font-semibold">Bem-vindo(a) novamente, {user.displayName}!</h1>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-8 justify-around my-10">
                 <InstagramButton />
