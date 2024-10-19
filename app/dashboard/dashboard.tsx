@@ -5,6 +5,7 @@ import { DonateButton } from "@/components/donateButton";
 import { InstagramButton } from "@/components/instagramButton";
 import { LoadingSpinner } from "@/components/loadingBar";
 import AnimatedCircularProgressBar from "@/components/ui/animated-circular-progress-bar";
+import { Progress } from "@/components/ui/progress";
 import { FIREBASE_AUTH } from "@/database/firebase";
 import { Answer, Question } from "@prisma/client";
 import { onAuthStateChanged, User } from "firebase/auth";
@@ -44,6 +45,11 @@ export function Dashboard() {
 
     const correctsPercentage = Math.trunc((corrects.length / answers.length) * 100);
 
+    let abilityList : number[] = [];
+    for(let a of answers) {
+        if(!abilityList.includes(a.question.abilityCode)) abilityList.push(a.question.abilityCode);
+    }
+
     return (
         <div>
             <div className="text-center mt-8">
@@ -63,6 +69,22 @@ export function Dashboard() {
                         <span>Você acertou {corrects.length} questões</span>
                     </div>
                 </div>
+            </div>
+            <div className="my-16 flex justify-center flex-col items-center">
+                <h1 className="text-3xl font-semibold">Taxa de acertos por habilidade:</h1>
+                <ul className="flex flex-col gap-4 w-full items-center p-4">
+                    {abilityList.sort((a, b) => a - b).map((ab) => {
+                        const totalAb = answers.filter(a => a.question.abilityCode == ab);
+                        const correctAb = totalAb.filter(a => a.correct == a.marked);
+                        const percentage = Math.trunc(correctAb.length / totalAb.length * 100) 
+                        return (
+                            <li className="w-1/3 h-16 flex flex-col gap-1" key={ab}>
+                                <span>Habilidade {ab} - {correctAb.length}/{totalAb.length} ({percentage}%)</span>
+                                <Progress value={percentage} />
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         </div>
     )
