@@ -3,6 +3,7 @@
 import { CreateListButton } from "@/components/createListButton";
 import { DonateButton } from "@/components/donateButton";
 import { InstagramButton } from "@/components/instagramButton";
+import { LoadingSpinner } from "@/components/loadingBar";
 import AnimatedCircularProgressBar from "@/components/ui/animated-circular-progress-bar";
 import { FIREBASE_AUTH } from "@/database/firebase";
 import { Answer, Question } from "@prisma/client";
@@ -36,7 +37,7 @@ export function Dashboard() {
         });
     }, [user?.uid, router]);
 
-    if(!user || !answers) return;
+    if(!user || !answers) return <div className="flex justify-center items-center my-32"><LoadingSpinner className="w-16 h-16" /></div>;
 
     const corrects = answers.filter(a => a.marked == a.correct);
     const wrongs = answers.filter(a => a.marked != a.correct);
