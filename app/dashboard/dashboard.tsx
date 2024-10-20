@@ -17,6 +17,12 @@ interface DashAnswer extends Answer {
     question: Question
 }
 
+function getPercentageHab(ab : number, answersList: DashAnswer[]) : number {
+    const totalAb = answersList.filter(a => a.question.abilityCode == ab);
+    const correctAb = totalAb.filter(a => a.correct == a.marked);
+    return Math.trunc(correctAb.length / totalAb.length * 100) 
+}
+
 export function Dashboard() {
     const [user, setUser] = useState<User | null>();
     const [answers, setAnswers] = useState<DashAnswer[]>();
@@ -71,9 +77,9 @@ export function Dashboard() {
                 </div>
             </div>
             <div className="my-16 flex justify-center flex-col items-center">
-                <h1 className="text-3xl font-semibold">Taxa de acertos por habilidade:</h1>
+                <h1 className="text-3xl font-semibold">Habilidade que mais precisam ser treinadas:</h1>
                 <ul className="flex flex-col gap-4 w-full items-center p-4">
-                    {abilityList.sort((a, b) => a - b).map((ab) => {
+                    {abilityList.sort((a, b) => getPercentageHab(a, answers) - getPercentageHab(b, answers)).map((ab) => {
                         const totalAb = answers.filter(a => a.question.abilityCode == ab);
                         const correctAb = totalAb.filter(a => a.correct == a.marked);
                         const percentage = Math.trunc(correctAb.length / totalAb.length * 100) 
