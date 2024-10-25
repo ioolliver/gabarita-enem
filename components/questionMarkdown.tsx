@@ -11,7 +11,15 @@ export function QuestionMarkdown({ content } : { content: string }) {
                 },
                 img(props) {
                     const {node, width, height, src, className, ...rest} = props;
-                    return <Image className="min-w-80 w-1/3" src={src || ""} width={1000} height={1000} alt="Texto I" {...rest} />
+                    return <Image className="max-w-[40rem] w-full" src={src || ""} width={1000} height={1000} alt="Texto I" {...rest} />
+                },
+                code(props) {
+                    const {className, children, ...rest} = props;
+                    return <p className="w-full flex flex-col gap-2 text-justify">{children}</p>
+                },
+                pre(props) {
+                    const {className, children, ...rest} = props;
+                    return <div className="flex flex-col gap-2">{children}</div>
                 }
             }
         }>{content}</Markdown>
