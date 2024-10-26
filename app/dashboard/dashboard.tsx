@@ -4,6 +4,7 @@ import { CreateListButton } from "@/components/createListButton";
 import { DonateButton } from "@/components/donateButton";
 import { InstagramButton } from "@/components/instagramButton";
 import { LoadingSpinner } from "@/components/loadingBar";
+import { MyListsButton } from "@/components/myListsButton";
 import AnimatedCircularProgressBar from "@/components/ui/animated-circular-progress-bar";
 import { Progress } from "@/components/ui/progress";
 import { FIREBASE_AUTH } from "@/database/firebase";
@@ -47,7 +48,6 @@ export function Dashboard() {
     if(!user || !answers) return <div className="flex justify-center items-center my-32"><LoadingSpinner className="w-16 h-16" /></div>;
 
     const corrects = answers.filter(a => a.marked == a.correct);
-    const wrongs = answers.filter(a => a.marked != a.correct);
 
     const correctsPercentage = Math.trunc((corrects.length / answers.length) * 100);
 
@@ -64,6 +64,7 @@ export function Dashboard() {
             <div className="flex flex-col md:flex-row items-center gap-8 justify-around my-10">
                 <InstagramButton />
                 <DonateButton />
+                <MyListsButton />
                 <CreateListButton />
             </div>
             <div className="flex items-center justify-center gap-8">
