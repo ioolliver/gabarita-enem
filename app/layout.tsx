@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Kanit, Spectral } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 export const kanitFont = Kanit({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
         className={`${kanitFont.className} antialiased`}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );
