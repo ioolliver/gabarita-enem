@@ -1,15 +1,20 @@
 'use server';
 
 import { Header } from "@/components/header";
-import { spectralFont } from "./layout";
 import { ArrowRight } from "lucide-react";
 import WordPullUp from "@/components/ui/word-pull-up";
 import { FadeText } from "@/components/ui/fade-text";
 import FlickeringGrid from "@/components/ui/flickering-grid";
+import { Spectral } from "next/font/google";
 
 function Bold({ children } : { children: React.ReactNode }) {
   return <span className="font-semibold">{children}</span>
 }
+
+const spectralFont = Spectral({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "800"]
+})
 
 function Background() {
   return (

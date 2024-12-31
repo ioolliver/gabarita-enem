@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { Kanit, Spectral } from "next/font/google";
+import { Kanit } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
-export const kanitFont = Kanit({
+const kanitFont = Kanit({
   subsets: ["latin"],
   weight: ["500", "800", "900"]
 });
-
-export const spectralFont = Spectral({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800"]
-})
 
 export const metadata: Metadata = {
   title: "Gabarita ENEM",
