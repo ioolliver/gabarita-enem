@@ -24,7 +24,7 @@ function CopyCode({ code } : { code: string }) {
             toast({ description: "Código PIX copiado com sucesso!" });
         })
         .catch(() => {
-            toast({ description: "Tente copiar novamente.", variant: "destructive" });
+            toast({ description: "Não foi possivel copiar o código.", variant: "destructive" });
         });
       }
     return (
