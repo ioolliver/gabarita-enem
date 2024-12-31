@@ -13,20 +13,20 @@ function Bold({ children } : { children: React.ReactNode }) {
 
 function Background() {
   return (
-    <div className="absolute size-full -z-10">
-      <FlickeringGrid maxOpacity={0.15} />
+    <div className="absolute -z-10">
+      <FlickeringGrid width="screen" height="screen"  maxOpacity={0.15} />
     </div>
   )
 }
 
 export default async function Home() {
   return (
-    <main>
+    <main className="">
       <Background />
       <Header />
-      <section className="w-full flex items-center justify-center flex-col mt-12 gap-2 md:gap-6">
-        <WordPullUp delayMultiple={2} className={`font-normal text-5xl md:text-6xl p-4 w-full md:w-1/2 text-center ${spectralFont.className}`}>Questões da forma que o ENEM quer que você veja.</WordPullUp>
-        <FadeText className={`${spectralFont.className} font-light text-2xl p-4 md:text-3xl md:w-1/2 text-center`}>
+      <section className="w-full flex items-center justify-center flex-col mt-8 gap-2 md:gap-6">
+        <WordPullUp delayMultiple={2} className={`font-normal text-5xl md:text-6xl px-4 w-full md:w-1/2 text-center ${spectralFont.className}`}>Questões da forma que o ENEM quer que você veja.</WordPullUp>
+        <FadeText className={`${spectralFont.className} font-light text-2xl px-4 md:text-3xl md:w-1/2 text-center`}>
         Se você deseja ter sucesso em uma prova que todo mundo faz, você precisa estudar da forma que ninguém estuda. Para isso, pare de focar em conteúdo, foque em <Bold>Habilidades</Bold>.</FadeText>
         <a href="lists/create" className="text-white cursor-pointer bg-gradient-to-br from-violet-500 to-violet-700 flex text-center items-center py-2 pl-10 pr-2 rounded-full mt-6 text-2xl justify-between gap-6 hover:scale-110 hover:from-violet-500 hover:to-violet-800 transition-transform">
             <span>Quero aprender</span>

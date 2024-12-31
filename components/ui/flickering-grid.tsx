@@ -13,8 +13,8 @@ interface FlickeringGridProps {
   gridGap?: number;
   flickerChance?: number;
   color?: string;
-  width?: number;
-  height?: number;
+  width?: number | "screen";
+  height?: number | "screen";
   className?: string;
 
   maxOpacity?: number;
@@ -125,8 +125,8 @@ const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     let gridParams: ReturnType<typeof setupCanvas>;
 
     const updateCanvasSize = () => {
-      const newWidth = width || container.clientWidth;
-      const newHeight = height || container.clientHeight;
+      const newWidth = (width == "screen" ? screen.width : width) || container.clientWidth;
+      const newHeight = (height == "screen" ? screen.height : height) || container.clientHeight;
       setCanvasSize({ width: newWidth, height: newHeight });
       gridParams = setupCanvas(canvas, newWidth, newHeight);
     };
@@ -178,6 +178,13 @@ const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       intersectionObserver.disconnect();
     };
   }, [setupCanvas, updateSquares, drawGrid, width, height, isInView]);
+
+  useEffect(() => {
+    if(width != "screen" && height != "screen") return;
+    const newWidth = width == "screen" ? screen.availWidth : canvasSize.width;
+    const newHeight = height == "screen" ? screen.availHeight : canvasSize.height;
+    addEventListener("resize", () => { setCanvasSize({ width: newWidth, height: newHeight }); });
+  }, [])
 
   return (
     <div ref={containerRef} className={`w-full h-full ${className}`}>

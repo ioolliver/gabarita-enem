@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body
-        className={`${kanitFont.className} antialiased`}
+        className={`${kanitFont.className} antialiased overflow-x-hidden`}
       >
         {children}
         <Toaster />
