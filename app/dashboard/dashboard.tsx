@@ -2,18 +2,16 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { FIREBASE_AUTH } from "@/database/firebase";
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FireExtinguisher, Flame, TrendingUp } from "lucide-react"
+import { Flame } from "lucide-react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  CardHeader
 } from "@/components/ui/card"
 import {
   ChartConfig,
@@ -21,9 +19,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-
-type TDashboard = {
-}
 
 type State = {
     id: string;
@@ -108,7 +103,7 @@ export function Chart({ weekFrequency } : { weekFrequency: number[] }) {
   )
 }
 
-export function Dashboard({ } : TDashboard) {
+export function Dashboard() {
     const [user, setUser] = useState<User | null>(null);
     const [status, setStatus] = useState<State | null>(null);
     const router = useRouter();

@@ -19,7 +19,7 @@ function getWeekFrequency(answers : Answer[]) {
     const frequency : number[] = [0,0,0,0,0,0,0];
     const today = new Date();
 
-    for(let answer of answers) {
+    for(const answer of answers) {
         if(!answer.createdAt) continue;
         const difference = getDifferenceInDays(answer.createdAt, today);
         if(difference > 6) { frequency[6]++; continue; }
