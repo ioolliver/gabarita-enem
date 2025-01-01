@@ -34,7 +34,8 @@ const chartConfig = {
 
 function convertToDay(day : number) {
   const today = new Date().getDay();
-  const finalDay = Math.abs(today - day);
+  let finalDay = today - day;
+  if(finalDay < 0) finalDay = 7 + finalDay;
   switch(finalDay) {
     case 0:
       return "Domingo"
@@ -48,8 +49,10 @@ function convertToDay(day : number) {
       return "Quinta"
     case 5: 
       return "Sexta"
-    default:
+    case 6:
       return "Sábado"
+    default:
+      return "Domingo"
   }
 }
 

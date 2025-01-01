@@ -39,7 +39,6 @@ export async function GET(req: Request, { params } : TUserInfo ) {
             }
         }
     });
-
     const weekFrequency = getWeekFrequency(answers);    
     return Response.json({ id, weekFrequency });
 }
