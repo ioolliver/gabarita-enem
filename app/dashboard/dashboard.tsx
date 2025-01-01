@@ -2,10 +2,10 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { FIREBASE_AUTH } from "@/database/firebase";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Flame } from "lucide-react"
+import React, { useEffect, useState } from "react";
+import { BookCopy, Flame, NotebookPen } from "lucide-react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
@@ -19,10 +19,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import Link from "next/link";
 
 type State = {
     id: string;
-    weekFrequency: number[]
+    weekFrequency: number[],
+    streak: number
 };
 
 const chartConfig = {
@@ -106,10 +108,29 @@ export function Chart({ weekFrequency } : { weekFrequency: number[] }) {
   )
 }
 
+type TDashButton = {
+  href: string;
+  placeholder: string;
+  icon: React.ReactNode;
+}
+
+function DashButton({ href, placeholder, icon } : TDashButton) {
+  return (
+    <Link className="text-white cursor-pointer bg-gradient-to-br from-indigo-900 to-purple-600 flex text-center items-center py-2 px-12 rounded-full text-xl gap-4" href={href}>
+      {icon}
+      <p>{placeholder}</p>
+    </Link>
+  )
+}
+
 export function Dashboard() {
     const [user, setUser] = useState<User | null>(null);
     const [status, setStatus] = useState<State | null>(null);
     const router = useRouter();
+
+    function logOut() {
+      signOut(FIREBASE_AUTH);
+    }
     
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -124,7 +145,7 @@ export function Dashboard() {
         async function fetchData() {
             if(!user) return;
             const url = window.location.origin;
-            const req = await fetch(url+`/api/user/info/${user.uid}`);
+            const req = await fetch(url+`/api/user/info/${user.uid}`, { next: { revalidate: 60 } });
             const data = await req.json();
             setStatus(data);
         }
@@ -162,7 +183,16 @@ export function Dashboard() {
             <div className="flex flex-col items-center flex-1">
               <div className="flex gap-2">
                 <Flame size={32} color="#d83004" fill="#f7ad04" />
-                <p className="text-2xl">Você está em um streak de 0 dias!</p>
+                <p className="text-2xl">Você está em um streak de {status.streak} dias!</p>
+              </div>
+              <div className="flex flex-col my-8 gap-8">
+                <DashButton href="/lists" placeholder="Minhas listas" icon={<BookCopy size={24} />} />
+                <DashButton href="/lists/create" placeholder="Criar uma lista" icon={<NotebookPen size={24} />} />
+              </div>
+              <div className="flex items-end h-full">
+                <div className="">
+                  <button onClick={logOut} className="underline text-xs">Sair da minha conta</button>
+                </div>
               </div>
             </div>
           </div>
