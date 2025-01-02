@@ -16,27 +16,28 @@ datasource db {
 model Question {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   command      String
+  area         String
   correct      Int
-  identifier   String
+  identifier   String @default("")
   year         Int
   abilityCode  Int
   options      String[]
   languageType Int      @default(0)
-  imageUrl     String   @default("")
   preCommand   String   @default("")
 }
 
 model List {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   abilityFilter  Int[]
+  area           String
   languageFilter Int
-  ownerId        String?
+  ownerId        String
   questions      String[]
   createdAt      DateTime @default(now())
 }
 
 model Answer {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   userId     String
   questionId String
   marked     Int
