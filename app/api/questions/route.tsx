@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
     const area = searchParams.get("area");
     const userId = searchParams.get("userId");
     const abilities = searchParams.get("abilities");
-    let whereObj : {[key:string] : any} = {};
+    const whereObj : {[key:string] : string | { in: number[] }} = {};
     if(area && ["lc", "mt", "cn", "ch"].includes(area)) whereObj["area"] = area;
     if(abilities) {
         const parsedAbilities = abilities.split(",").map(a => Number(a.trim()) || null).filter(a => a !== null);
@@ -28,15 +28,15 @@ export async function GET(req: NextRequest) {
     return Response.json({count});
 }
 
-export async function POST(req: Request) {
-    const data = await req.json();
-    try{
-        const question = await prisma.question.create({
-            data
-        }); 
-        return Response.json(question);
-    }catch(e : any) {
-        console.log(e.stack);
-        return Response.json({});
-    }
-}
+// export async function POST(req: Request) {
+//     const data = await req.json();
+//     try{
+//         const question = await prisma.question.create({
+//             data
+//         }); 
+//         return Response.json(question);
+//     }catch(e : unknown) {
+//         console.log(e.stack);
+//         return Response.json({});
+//     }
+// }
