@@ -12,11 +12,14 @@ export async function POST(req: Request) {
     const { userId, abilities, listLen, area, languageFilter } : TCreateList = await req.json();
     
     if(!userId) return Response.json({"status": "Error", "message": "Necessário fazer Login."});
-    if(!abilities) return  Response.json({"status": "Error", "message": "Necessário pelo menos uma habilidade."});
-    const parsedAbilities = abilities.map(ab => Number(ab) || null).filter(ab => ab !== null);if(!abilities) return  Response.json({"status": "Error", "message": "Necessário pelo menos uma habilidade."});
-    if(parsedAbilities.length == 0) return  Response.json({"status": "Error", "message": "Necessário pelo menos uma habilidade."});
     if(!listLen || listLen < 5 || listLen > 30) return  Response.json({"status": "Error", "message": "Tamanho de lista inválido."});
     if(!area || !["lc", "mt", "ch", "cn"].includes(area)) return  Response.json({"status": "Error", "message": "Área de conhecimento inválida."});
+
+    const parsedAbilities = (abilities || []).map(ab => Number(ab) || null).filter(ab => ab !== null);
+    let abilityFilter = {}
+    if(parsedAbilities.length > 0) abilityFilter = {
+        in: parsedAbilities
+    }
 
     const questions = await prisma.question.findMany({
         where: {
@@ -24,9 +27,7 @@ export async function POST(req: Request) {
             languageType: {
                 in: [0, Number(languageFilter) || 0]
             },
-            abilityCode: {
-                in: parsedAbilities
-            }
+            abilityCode: abilityFilter
         }
     });
 
@@ -36,8 +37,9 @@ export async function POST(req: Request) {
 
     const questionsId = questions.map(q => q.id);
     const listQuestions : string[] = [];
+
     for(let i = 0; i < listLen; i++) {
-        const random = Math.floor(Math.random() * listLen);
+        const random = Math.floor(Math.random() * (questionsId.length-1));
         listQuestions.push(questionsId[random]);
         questionsId.splice(random, 1);
     }

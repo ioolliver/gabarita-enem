@@ -18,7 +18,7 @@ model Question {
   command      String
   area         String
   correct      Int
-  identifier   String @default("")
+  identifier   String   @default("")
   year         Int
   abilityCode  Int
   options      String[]
@@ -43,4 +43,13 @@ model Answer {
   marked     Int
   correct    Int
   createdAt  DateTime @default(now())
+}
+
+model ListAnswer {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  listId    String
+  corrects  Int
+  total     Int
+  createdAt DateTime @default(now())
 }

@@ -75,10 +75,6 @@ export function ListCreator() {
             toast({ description: "Selecione uma área de estudo!", variant: "destructive" });
             return;
         }
-        if(abilities.length == 0) {
-            toast({ description: "Selecione pelo menos uma habilidade!", variant: "destructive" });
-            return;
-        }
         if(listLen < 5) {
             toast({ description: "A lista precisa ter pelo menos 5 questões!", variant: "destructive" });
             return;

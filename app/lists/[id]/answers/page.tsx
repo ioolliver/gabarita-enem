@@ -1,9 +1,10 @@
 import { Header } from "@/components/header";
 import { redirect } from "next/navigation";
-import { QuestionList } from "./questionList";
+import { CorrectList } from "./correctList";
 
-export default async function Page({ params } : { params: Promise<{id: string}> }) {
+export default async function Page({ params, searchParams } : { params: Promise<{id: string}>, searchParams: Promise<{ a: string}> }) {
     const { id } = await params;
+    const { a } = await searchParams;
     const questionsFetch = await fetch(process.env.API_URL+"list/"+id, { cache: "force-cache" });
     const questions = await questionsFetch.json();
 
@@ -13,7 +14,7 @@ export default async function Page({ params } : { params: Promise<{id: string}> 
         <main>
             <Header />
             <section className="bg-white m-4 p-8 shadow-lg rounded-lg text-center">
-                <QuestionList questions={questions} />
+                <CorrectList listId={id} questions={questions} answers={a} />
             </section>
         </main>
     )
