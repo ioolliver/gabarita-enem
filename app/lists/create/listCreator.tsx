@@ -152,7 +152,7 @@ export function ListCreator() {
                 type="number" 
                 value={listLen} 
                 min={5} 
-                max={45} 
+                max={30} 
                 placeholder="Quantidade de questões entre 5 e 30"
                 onChange={(e) => setListLen(Number(e.target.value))} 
                 />
