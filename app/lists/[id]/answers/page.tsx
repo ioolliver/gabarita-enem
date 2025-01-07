@@ -14,7 +14,7 @@ export default async function Page({ params, searchParams } : { params: Promise<
         <main>
             <Header />
             <section className="bg-white m-4 p-8 shadow-lg rounded-lg text-center">
-                <CorrectList listId={id} questions={questions} answers={a} />
+                <CorrectList listId={id} questions={questions} answers={a || ""} />
             </section>
         </main>
     )

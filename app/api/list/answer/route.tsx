@@ -52,7 +52,8 @@ export async function POST(req: NextRequest) {
                 corrects: correctCount,
                 total: questions.length,
                 listId,
-                userId
+                userId,
+                answers
             }
         })
     ])

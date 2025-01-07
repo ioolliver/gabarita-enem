@@ -52,4 +52,5 @@ model ListAnswer {
   corrects  Int
   total     Int
   createdAt DateTime @default(now())
+  answers String
 }

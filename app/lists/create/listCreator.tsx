@@ -1,6 +1,5 @@
 'use client';
 
-import { LoginButton } from "@/components/loginButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MultiSelect } from "@/components/ui/multi-select";
@@ -20,10 +19,11 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import NumberTicker from "@/components/ui/number-ticker";
 import { redirect } from "next/navigation";
+import { LoginRequired } from "@/components/loginRequired";
   
 
 export function ListCreator() {
-    const [user, setUser] = useState<User | null | "nologin">(null);
+    const [user, setUser] = useState<User | null | undefined>(undefined);
     const [area, setArea] = useState("");
     const [foreign, setForeign] = useState("");
     const [abilities, setAbilities] = useState<string[]>([]);
@@ -33,12 +33,11 @@ export function ListCreator() {
 
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
-            if(!user) { setUser("nologin"); return; } 
             setUser(user);
         })
     });
 
-    if(!user) return (
+    if(user === undefined) return (
         <div className="flex p-16 w-full flex-col gap-8">
             <Skeleton className="w-full h-12 rounded-full" />
             <Skeleton className="w-full h-12 rounded-full" />
@@ -46,12 +45,7 @@ export function ListCreator() {
         </div>
     )
 
-    if(user === "nologin") return (
-        <div className="flex p-16 w-full flex-col items-center gap-8">
-            <p>Para usar essa função, faça login com o Google. É rápido!</p>
-            <LoginButton />
-        </div>
-    )
+    if(user === null) return <LoginRequired />
 
     const options = [];
     for(let i = 1; i <= 30; i++) options.push({ value: i+"", label: "Habilidade " + i, icon: Album });
@@ -64,7 +58,7 @@ export function ListCreator() {
     async function updateQuestionsCount(presetArea? : string, presetAbilities? : string[]) {
         if(!presetArea) presetArea = area;
         if(!presetAbilities) presetAbilities = abilities;
-        if(!user || user == "nologin") return;
+        if(!user) return;
         const req = await fetch(window.origin+`/api/questions?area=${presetArea}&abilities=${presetAbilities.join(",")}&userId=${user.uid}`);
         const data = await req.json();
         setQuestionsCount(data.count);
@@ -87,7 +81,7 @@ export function ListCreator() {
             toast({ description: "Escolha uma lingua estrangeira!", variant: "destructive" });
             return;
         }
-        if(!user || user === "nologin") {
+        if(!user) {
             toast({ description: "Faça login.", variant: "destructive" });
             return;
         }
