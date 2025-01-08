@@ -14,9 +14,9 @@ function getLastWeek() {
 
 function getWeekFrequency(answers : Answer[]) {    
     function getDifferenceInDays(date1: Date, date2: Date): number {
-        const msInDay = 1000 * 60 * 60 * 24;
-        const diffInMs = Math.abs(date1.getTime() - date2.getTime());
-        return Math.ceil(diffInMs / msInDay);
+        const date1Count = date1.getMonth() + date1.getDate();
+        const date2Count = date2.getMonth() + date2.getDate();
+        return Math.abs(date1Count - date2Count);
     }
     
     const frequency : number[] = [0,0,0,0,0,0,0];
