@@ -3,6 +3,7 @@
 import { LoginRequired } from "@/components/loginRequired";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FIREBASE_AUTH } from "@/database/firebase"
+import { useToast } from "@/hooks/use-toast";
 import { List, ListAnswer } from "@prisma/client";
 import { onAuthStateChanged, User } from "firebase/auth"
 import Link from "next/link";
@@ -10,8 +11,9 @@ import { useEffect, useState } from "react"
 
 export function MyLists() {
     const [user, setUser] = useState<User | null | undefined>(undefined);
-    const [lists, setLists] = useState<List[]>([]);
+    const [lists, setLists] = useState<List[] | null>(null);
     const [answeredLists, setAnsweredLists] = useState<ListAnswer[]>([]);
+    const { toast } = useToast();
 
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -39,7 +41,11 @@ export function MyLists() {
         return `${pad(date.getDate())}/${pad(date.getMonth()+1)}/${date.getFullYear()}`;
     }
 
-    if(user === undefined) return (
+    function openingList() {
+        toast({ description: "Abrindo lista..." })
+    }
+
+    if(user === undefined || lists == null) return (
         <div className="py-8 flex flex-col gap-4">   
             <Skeleton className="w-full h-12 rounded-full" />
             <Skeleton className="w-full h-12 rounded-full" />
@@ -67,7 +73,7 @@ export function MyLists() {
                                     <p>Nota: {answered.corrects}/{answered.total}</p>
                                     : <p>Não respondida</p>
                                 }
-                                <Link className="bg-green-500 text-white p-2 rounded-lg" href={"/lists/"+list.id+(answered ? "/answers?a="+answered.answers : "")}>{answered ? "Visualizar" : "Responder"}</Link>
+                                <Link onClick={openingList} className="bg-green-500 text-white p-2 rounded-lg" href={"/lists/"+list.id+(answered ? "/answers?a="+answered.answers : "")}>{answered ? "Visualizar" : "Responder"}</Link>
                             </li>
                         )
                     })
