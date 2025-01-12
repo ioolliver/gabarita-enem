@@ -161,6 +161,7 @@ export function ListCreator() {
                 <p className="text-sm">
                     {questionsCount == 0 ? "Não temos" : <NumberTicker value={questionsCount} />} questões disponíveis com os filtros acima.
                 </p>
+                <p className="text-xs">Questões já respondidas não estão inclusas.</p>
                 <Button onClick={createList} className="text-xl p-8 w-full md:w-64">Criar lista</Button>
             </div>
         </div>
