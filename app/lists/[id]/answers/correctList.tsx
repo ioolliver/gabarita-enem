@@ -54,7 +54,9 @@ export function CorrectList({ listId, questions, answers } : { questions: Questi
                                         mark == "correct" ? <Check /> : <X />
                                         : null 
                                     }
-                                    <p>{parseToQuestion(i)}&#10089; {option}</p>
+                                    <QuestionMarkdown>
+                                    {`${parseToQuestion(i)}) ` + option}
+                                    </QuestionMarkdown>
                                 </li>
                             )
                         })}

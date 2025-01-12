@@ -62,7 +62,9 @@ export function QuestionList({ questions } : { questions: Question[] }) {
                                 id={i+"-"+index}
                                 onChange={(e) => ( setAnswer(e.target.id) )}
                                 />
-                                <p>{parseToQuestion(i)}&#10089; {option}</p>
+                                <QuestionMarkdown>
+                                {`${parseToQuestion(i)}) ` + option}
+                                </QuestionMarkdown>
                             </li>
                         ))}
                     </ul>
