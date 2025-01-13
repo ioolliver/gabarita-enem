@@ -12,6 +12,7 @@ const kanitFont = Kanit({
 
 export const metadata: Metadata = {
   title: "Gabarita ENEM",
+  keywords: ["gabarita", "enem", "habilidades", "matriz", "referência", "linguagens", "vestibular", "banco", "questões"],
   description: "O maior e único banco de questões por habilidades do ENEM.",
 };
 
