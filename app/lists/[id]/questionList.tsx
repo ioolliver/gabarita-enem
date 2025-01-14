@@ -55,7 +55,8 @@ export function QuestionList({ questions } : { questions: Question[] }) {
                     </QuestionMarkdown>
                     <ul className="flex flex-col gap-2">
                         {question.options.map((option, i) => (
-                            <li key={option} className="flex gap-4 items-center border-2 p-2 rounded-lg">
+                            <label key={option} htmlFor={i+"-"+index}>
+                            <li className="flex gap-4 items-center border-2 p-2 rounded-lg">
                                 <input 
                                 type="radio" 
                                 name={question.id} 
@@ -66,6 +67,7 @@ export function QuestionList({ questions } : { questions: Question[] }) {
                                 {`${parseToQuestion(i)}) ` + option}
                                 </QuestionMarkdown>
                             </li>
+                            </label>
                         ))}
                     </ul>
                 </div>)
