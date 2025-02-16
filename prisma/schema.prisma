@@ -24,6 +24,7 @@ model Question {
   options      String[]
   languageType Int      @default(0)
   preCommand   String   @default("")
+  difficulty Int?
 }
 
 model List {
