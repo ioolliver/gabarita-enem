@@ -3,16 +3,12 @@
 import Image from "next/image";
 import { LoginButton } from "./loginButton";
 import Link from "next/link";
-import { DonateButton } from "./donateButton";
 
 function NavBar() {
     return (
         <ul className="flex bg-[#ffffffaa] px-12 py-2 gap-8 rounded-full text-xl shadow-lg">
             <li className="cursor-pointer">
                 <a href="https://www.instagram.com/gabarita.linguagens" target="_blank">Instagram</a>
-            </li>
-            <li className="cursor-pointer">
-                <DonateButton />
             </li>
         </ul>
     )
