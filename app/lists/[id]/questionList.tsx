@@ -11,6 +11,9 @@ function QuestionMarkdown({ children } : { children: string }) {
         img(props) {
             // eslint-disable-next-line @next/next/no-img-element
             return <img className="" src={props.src} alt="Question ilustration" />
+        },
+        h4(props) {
+            return <h4 className="text-xs">{props.children}</h4>
         }
     }}>
         { children }
