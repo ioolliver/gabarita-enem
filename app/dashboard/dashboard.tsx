@@ -6,7 +6,7 @@ import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BookCopy, Flame, NotebookPen } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import {
   Card,
   CardContent,
@@ -73,7 +73,7 @@ export function Chart({ weekFrequency } : { weekFrequency: number[] }) {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <AreaChart
+          <BarChart
             accessibilityLayer
             data={data}
             margin={{
@@ -93,7 +93,7 @@ export function Chart({ weekFrequency } : { weekFrequency: number[] }) {
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <Area
+            <Bar
               dataKey="value"
               name="Questões"
               type="basis"
@@ -101,7 +101,7 @@ export function Chart({ weekFrequency } : { weekFrequency: number[] }) {
               fillOpacity={0.4}
               stroke="var(--color-desktop)"
             />
-          </AreaChart>
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
