@@ -2,6 +2,7 @@ import { Header } from "@/components/header";
 import { redirect } from "next/navigation";
 import { CorrectList } from "./correctList";
 import { PageView } from "@/components/analytics/pageView";
+import { Footer } from "@/components/footer";
 
 export default async function Page({ params, searchParams } : { params: Promise<{id: string}>, searchParams: Promise<{ a: string}> }) {
     const { id } = await params;
@@ -18,6 +19,7 @@ export default async function Page({ params, searchParams } : { params: Promise<
             <section className="bg-white m-4 p-8 shadow-lg rounded-lg text-center">
                 <CorrectList listId={id} questions={questions} answers={a || ""} />
             </section>
+            <Footer />
         </main>
     )
 }

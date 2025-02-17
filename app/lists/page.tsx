@@ -1,6 +1,7 @@
 import { Header } from "@/components/header";
 import { MyLists } from "./MyLists";
 import { PageView } from "@/components/analytics/pageView";
+import { Footer } from "@/components/footer";
 
 export default function Page() {
     return (
@@ -11,6 +12,7 @@ export default function Page() {
                 <h1 className="text-3xl">Suas listas</h1>
                 <MyLists />
             </section>
+            <Footer />
         </main>
     )
 }

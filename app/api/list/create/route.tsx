@@ -8,6 +8,18 @@ type TCreateList = {
     languageFilter: 0 | 1 | 2 | null;
 }
 
+function generateRandomArray(size : number, min : number, max : number) {
+    let arr = [];
+    for (let i = min; i <= max; i++) {
+        arr.push(i);
+    }
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr.slice(0, size);
+}
+
 export async function POST(req: Request) {
     const { userId, abilities, listLen, area, languageFilter } : TCreateList = await req.json();
     
@@ -36,13 +48,8 @@ export async function POST(req: Request) {
     }
 
     const questionsId = questions.map(q => q.id);
-    const listQuestions : string[] = [];
-
-    for(let i = 0; i < listLen; i++) {
-        const random = Math.floor(Math.random() * (questionsId.length-1));
-        listQuestions.push(questionsId[random]);
-        questionsId.splice(random, 1);
-    }
+    const randomList = generateRandomArray(listLen, 0, questions.length-1);
+    const listQuestions : string[] = randomList.map(n => questionsId[n]);
 
     const list = await prisma.list.create({
         data: {

@@ -7,6 +7,7 @@ import { FadeText } from "@/components/ui/fade-text";
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { Spectral } from "next/font/google";
 import { PageView } from "@/components/analytics/pageView";
+import { Footer } from "@/components/footer";
 
 function Bold({ children } : { children: React.ReactNode }) {
   return <span className="font-semibold">{children}</span>
@@ -40,6 +41,7 @@ export default async function Home() {
             <ArrowRight size={24} />
         </a>
       </section>
+      <Footer />
     </main>
   );
 }
