@@ -9,7 +9,7 @@ type TCreateList = {
 }
 
 function generateRandomArray(size : number, min : number, max : number) {
-    let arr = [];
+    const arr = [];
     for (let i = min; i <= max; i++) {
         arr.push(i);
     }

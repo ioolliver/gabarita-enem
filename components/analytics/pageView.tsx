@@ -9,7 +9,7 @@ export function PageView({ title } : { title: string }) {
         logEvent(ANALYTICS, "page_view", {
             page_title: title
         })
-    }, []);
+    }, [title]);
     
     return null;
 }
