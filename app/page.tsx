@@ -6,6 +6,7 @@ import WordPullUp from "@/components/ui/word-pull-up";
 import { FadeText } from "@/components/ui/fade-text";
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { Spectral } from "next/font/google";
+import { PageView } from "@/components/analytics/pageView";
 
 function Bold({ children } : { children: React.ReactNode }) {
   return <span className="font-semibold">{children}</span>
@@ -27,6 +28,7 @@ function Background() {
 export default async function Home() {
   return (
     <main className="">
+      <PageView />
       <Background />
       <Header />
       <section className="w-full flex items-center justify-center flex-col mt-8 gap-2 md:gap-6">
