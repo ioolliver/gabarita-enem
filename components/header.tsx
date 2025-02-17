@@ -8,7 +8,7 @@ function NavBar() {
     return (
         <ul className="flex bg-[#ffffffaa] px-12 py-2 gap-8 rounded-full text-xl shadow-lg">
             <li className="cursor-pointer">
-                <a href="https://www.instagram.com/gabarita.linguagens" target="_blank">Instagram</a>
+                <a href="https://www.instagram.com/gabaritaoenem" target="_blank">Instagram</a>
             </li>
         </ul>
     )
