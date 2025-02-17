@@ -28,7 +28,7 @@ function Background() {
 export default async function Home() {
   return (
     <main className="">
-      <PageView />
+      <PageView title="Página inicial" />
       <Background />
       <Header />
       <section className="w-full flex items-center justify-center flex-col mt-8 gap-2 md:gap-6">

@@ -1,6 +1,7 @@
 import { Header } from "@/components/header";
 import { redirect } from "next/navigation";
 import { CorrectList } from "./correctList";
+import { PageView } from "@/components/analytics/pageView";
 
 export default async function Page({ params, searchParams } : { params: Promise<{id: string}>, searchParams: Promise<{ a: string}> }) {
     const { id } = await params;
@@ -12,6 +13,7 @@ export default async function Page({ params, searchParams } : { params: Promise<
 
     return (
         <main>
+            <PageView title="Resposta da lista" />
             <Header />
             <section className="bg-white m-4 p-8 shadow-lg rounded-lg text-center">
                 <CorrectList listId={id} questions={questions} answers={a || ""} />
