@@ -20,11 +20,12 @@ import axios from "axios";
 import NumberTicker from "@/components/ui/number-ticker";
 import { redirect } from "next/navigation";
 import { LoginRequired } from "@/components/loginRequired";
+import { AbilitiesDescription } from "./abilitiesDescription";
   
 
 export function ListCreator() {
     const [user, setUser] = useState<User | null | undefined>(undefined);
-    const [area, setArea] = useState("");
+    const [area, setArea] = useState<"" | "lc" | "mt" | "cn" | "ch">("");
     const [foreign, setForeign] = useState("");
     const [abilities, setAbilities] = useState<string[]>([]);
     const [listLen, setListLen] = useState(5);
@@ -47,8 +48,13 @@ export function ListCreator() {
 
     if(user === null) return <LoginRequired />
 
+    function getOptionDesc(index : number) {
+        if(!area) return "";
+        return AbilitiesDescription[area][index-1] || "";
+    }
+
     const options = [];
-    for(let i = 1; i <= 30; i++) options.push({ value: i+"", label: "Habilidade " + i, icon: Album });
+    for(let i = 1; i <= 30; i++) options.push({ value: i+"", label: "H" + i + " - " + getOptionDesc(i), icon: Album });
 
     function willForeignLanguageApply() {
         return (area === "lc" && 
@@ -105,7 +111,7 @@ export function ListCreator() {
         <div className="flex p-16 w-full flex-col gap-16">
             <div className="flex flex-col md:flex-row w-full justify-between gap-2">
                 <p className="text-xl">Primeiro, escolha o que quer estudar:</p>
-                <Select onValueChange={(v) => {setArea(v); updateQuestionsCount(v, undefined);}} value={area}>
+                <Select onValueChange={(v : "lc" | "ch" | "cn" | "mt") => {setArea(v); updateQuestionsCount(v, undefined);}} value={area}>
                     <SelectTrigger className="w-full md:w-1/2">
                         <SelectValue placeholder="Selecione a área de conhecimento" />
                     </SelectTrigger>
