@@ -108,7 +108,7 @@ export function ListCreator() {
     }
 
     return (
-        <div className="flex p-16 w-full flex-col gap-16">
+        <div className="flex px-0 md:px-16 py-16 w-full flex-col gap-16">
             <div className="flex flex-col md:flex-row w-full justify-between gap-2">
                 <p className="text-xl">Primeiro, escolha o que quer estudar:</p>
                 <Select onValueChange={(v : "lc" | "ch" | "cn" | "mt") => {setArea(v); updateQuestionsCount(v, undefined);}} value={area}>
