@@ -31,6 +31,7 @@ export function ListCreator() {
     const [listLen, setListLen] = useState(5);
     const [questionsCount, setQuestionsCount] = useState(0);
     const { toast } = useToast();
+    const [createDisabled, setCreateDisabled] = useState(false);
 
     useEffect(() => {
         onAuthStateChanged(FIREBASE_AUTH, (user) => {
@@ -91,6 +92,7 @@ export function ListCreator() {
             toast({ description: "Faça login.", variant: "destructive" });
             return;
         }
+        setCreateDisabled(true);
         toast({ description: "Criando..." });
         const res = await axios.post(window.origin+"/api/list/create", {
             userId: user.uid,
@@ -100,6 +102,7 @@ export function ListCreator() {
             languageFilter: foreign
         });
         const data = res.data;
+        setCreateDisabled(false);
         if(data.status != "Success") {
             toast({ description: `Erro: ${data.message}`, variant: "destructive" })
             return;
@@ -168,7 +171,7 @@ export function ListCreator() {
                     {questionsCount == 0 ? "Não temos" : <NumberTicker value={questionsCount} />} questões disponíveis com os filtros acima.
                 </p>
                 <p className="text-xs">Questões já respondidas não estão inclusas.</p>
-                <Button onClick={createList} className="text-xl p-8 w-full md:w-64">Criar lista</Button>
+                <Button disabled={createDisabled} onClick={createList} className="text-xl p-8 w-full md:w-64">Criar lista</Button>
             </div>
         </div>
     )
