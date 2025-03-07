@@ -1,9 +1,25 @@
+'use client';
+
 import { cn } from "@/lib/utils";
 import { Question } from "@prisma/client";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import { RegisterAnswers } from "./registerAnswers";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle
+  } from "@/components/ui/alert-dialog"
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { FIREBASE_AUTH } from "@/database/firebase";
+import axios from "axios";
 
 function QuestionMarkdown({ children } : { children: string }) {
     return <Markdown className="flex flex-col gap-4"
@@ -28,6 +44,29 @@ function parseToQuestion(index : number) {
 }
 
 export function CorrectList({ listId, questions, answers } : { questions: Question[], answers: string, listId: string }) {
+    
+    const [isOpen, setIsOpen] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    const [feedbackContent, setFeedbackContent] = useState("");
+
+    function showFeedback() {
+        setIsOpen(true);
+    }
+
+    async function sendFeedback(content : string) {
+        await axios.post(window.origin+"/api/feedback", {
+            content,
+            userId: user?.uid
+        });
+    }
+
+    useEffect(() => {
+        onAuthStateChanged(FIREBASE_AUTH, (user) => {
+            if(!user) return;
+            setUser(user);
+        });
+    }, []);
+    
     return (<div className="flex flex-col gap-8 px-16 text-justify">
         {
             questions.map((question, index) =>
@@ -67,6 +106,24 @@ export function CorrectList({ listId, questions, answers } : { questions: Questi
         <div className="w-full flex justify-center">
             <Link className="bg-green-600 px-8 py-2 text-white text-xl rounded-xl" href={"/dashboard"}>Voltar</Link>
         </div>
-        <RegisterAnswers answers={answers} listId={listId} />
+        <AlertDialog open={isOpen}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                <AlertDialogTitle className="text-2xl">Ei {user?.displayName}, que tal um feedback?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Deixe aqui sugestões, críticas, elogios e opiniões! :)
+                </AlertDialogDescription>
+                <textarea className="border-2 border-black p-2 rounded-lg" placeholder="Deixe sua sugestão aqui!"
+                onChange={(e) => setFeedbackContent(e.target.value)}
+                value={feedbackContent}
+                />
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                <AlertDialogCancel onClick={() => { setIsOpen(false); }}>Não, obrigado!</AlertDialogCancel>
+                <AlertDialogAction onClick={() => { sendFeedback(feedbackContent); setIsOpen(false); }}>Enviar</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+        <RegisterAnswers answers={answers} listId={listId} showFeedback={showFeedback} />
     </div>)
 }

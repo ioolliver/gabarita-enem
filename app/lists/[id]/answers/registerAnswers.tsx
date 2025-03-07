@@ -5,7 +5,7 @@ import axios from "axios";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-export function RegisterAnswers({ answers, listId } : { answers: string, listId: string }) {
+export function RegisterAnswers({ answers, listId, showFeedback } : { answers: string, listId: string, showFeedback: () => void }) {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -16,12 +16,19 @@ export function RegisterAnswers({ answers, listId } : { answers: string, listId:
     }, []);
 
     useEffect(() => {
-        if(!user) return;
-        axios.post(window.origin+"/api/list/answer", {
-            listId,
-            userId: user.uid,
-            answers
-        });
+        async function postAnswer() {
+            if(!user) return;
+            const res = await axios.post(window.origin+"/api/list/answer", {
+                listId,
+                userId: user.uid,
+                answers
+            });
+            const data = res.data;
+            if(data.feedback) {
+                showFeedback();
+            }
+        }
+        postAnswer();
     }, [user, answers, listId]);
 
     return null;

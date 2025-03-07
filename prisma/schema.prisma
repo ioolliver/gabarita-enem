@@ -24,7 +24,14 @@ model Question {
   options      String[]
   languageType Int      @default(0)
   preCommand   String   @default("")
-  difficulty Int?
+  difficulty   Float
+}
+
+model Feedback {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  content  String
+  createdAt DateTime @default(now())
 }
 
 model List {
@@ -53,5 +60,5 @@ model ListAnswer {
   corrects  Int
   total     Int
   createdAt DateTime @default(now())
-  answers String
+  answers   String
 }

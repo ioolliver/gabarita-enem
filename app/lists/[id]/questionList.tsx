@@ -46,6 +46,7 @@ export function QuestionList({ questions } : { questions: Question[] }) {
     }, [apiUrl])
 
     return (<div className="flex flex-col gap-8 px-16 text-justify">
+        <div className="flex flex-col gap-8">
         {
             questions.map((question, index) =>
                 (<div className="" key={question.id}>
@@ -76,6 +77,7 @@ export function QuestionList({ questions } : { questions: Question[] }) {
                 </div>)
             )
         }
+        </div>
         <div className="w-full flex justify-center">
             <Link className="bg-green-600 px-8 py-2 text-white text-xl rounded-xl" href={apiUrl+"/answers?a="+answers.join("")}>Responder</Link>
         </div>

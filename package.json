@@ -47,5 +47,22 @@
   },
   "overrides": {
     "react-is": "^19.0.0-rc-69d4b800-20241021"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "protobufjs",
+      "sharp"
+    ],
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "core-js",
+      "prisma",
+      "protobufjs",
+      "sharp"
+    ]
   }
 }

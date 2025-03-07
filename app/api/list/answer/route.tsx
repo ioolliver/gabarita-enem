@@ -56,7 +56,13 @@ export async function POST(req: NextRequest) {
                 answers
             }
         })
-    ])
+    ]);
 
-    return Response.json({});
+    const userSentFeedback = await prisma.feedback.findFirst({
+        where: {
+            userId
+        }
+    })
+
+    return Response.json({ feedback: userSentFeedback ? true : false });
 }
